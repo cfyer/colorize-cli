@@ -6,6 +6,7 @@ composer require cfyer/colorize-cli
 ```
 
 ## How To Use
+
 ```
 <?php
 
@@ -16,9 +17,13 @@ use Cfyer\ColorizeCli\CliColor;
 echo CliColor::paint('text', 'yellow', 'bg');
 ```
 
-### Get Color
+or
+
 ```
-echo CliColor::fg('red') . "Hello" . CliColor::RESET;
+echo CliColor::fg('red') . "Hello" . CliColor::RESET . PHP_EOL;
+echo CliColor::bg('red') . "Hello" . CliColor::RESET . PHP_EOL;
+echo CliColor::ul('red') . "Hello" . CliColor::RESET . PHP_EOL;
+echo CliColor::bold('red') . "Hello" . CliColor::RESET . PHP_EOL;
 ```
 
 ## Styles
@@ -26,3 +31,16 @@ echo CliColor::fg('red') . "Hello" . CliColor::RESET;
 - foreground : fg
 - underline : ul
 - bold : bold
+
+## Colors
+- black
+- red
+- green
+- yellow
+- blue
+- purple
+- cyan
+- white
+
+## License 
+The MIT License (MIT). See <a href="https://github.com/cfyer/colorize-cli/blob/master/LICENSE">License File</a> for more information.
