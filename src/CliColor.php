@@ -1,48 +1,115 @@
 <?php
 
-namespace src;
+namespace Cfyer\ColorizeCli;
 
-class CliColor
+use Cfyer\ColorizeCli\Contracts\CliColorContract;
+use Cfyer\ColorizeCli\Exceptions\UnknownStyleTypeException;
+
+
+class CliColor implements CliColorContract
 {
-    private string $reset = "\[\033[0m\]";
-    private array $bg_colors = array(
-        'bg_black' => "\[\033[40m\]",
-        'bg_red' => "\[\033[0;41m\]",
-        'bg_green' => "\[\033[0;42m\]",
-        'bg_yellow' => "\[\033[0;43m\]",
-        'bg_blue' => "\[\033[0;44m\]",
-        'bg_purple' => "\[\033[0;45m\]",
-        'bg_cyan' => "\[\033[0;46m\]",
-        'bg_white' => "\[\033[0;47m\]",
+    private static array $bg_colors = array(
+        'black' => "\033[40m",
+        'red' => "\033[0;41m",
+        'green' => "\033[0;42m",
+        'yellow' => "\033[0;43m",
+        'blue' => "\033[0;44m",
+        'purple' => "\033[0;45m",
+        'cyan' => "\033[0;46m",
+        'white' => "\033[0;47m",
     );
-    private array $fg_colors = array(
-        'fg_black' => "\[\033[0;30m\]",
-        'fg_red' => "\[\033[0;31m\]",
-        'fg_green' => "\[\033[0;32m\]",
-        'fg_yellow' => "\[\033[0;33\]",
-        'fg_blue' => "\[\033[0;34\]",
-        'fg_purple' => "\[\033[0;35\]",
-        'fg_cyan' => "\[\033[0;36\]",
-        'fg_white' => "\[\033[0;37\]",
+    private static array $fg_colors = array(
+        'black' => "\033[0;30m",
+        'red' => "\033[0;31m",
+        'green' => "\033[0;32m",
+        'yellow' => "\033[0;33m",
+        'blue' => "\033[0;34m",
+        'purple' => "\033[0;35m",
+        'cyan' => "\033[0;36m",
+        'white' => "\033[0;37m",
     );
-    private array $ul_colors = array(
-        'ul_black' => "\[\033[4;30m\]",
-        'ul_red' => "\[\033[4;31m\]",
-        'ul_green' => "\[\033[4;32m\]",
-        'ul_yellow' => "\[\033[4;33\]",
-        'ul_blue' => "\[\033[4;34\]",
-        'ul_purple' => "\[\033[4;35\]",
-        'ul_cyan' => "\[\033[4;36\]",
-        'ul_white' => "\[\033[4;37\]",
+    private static array $ul_colors = array(
+        'black' => "\033[4;30m",
+        'red' => "\033[4;31m",
+        'green' => "\033[4;32m",
+        'yellow' => "\033[4;33m",
+        'blue' => "\033[4;34m",
+        'purple' => "\033[4;35m",
+        'cyan' => "\033[4;36m",
+        'white' => "\033[4;37m",
     );
-    private array $b_colors = array(
-        'b_black' => "\[\033[1;30m\]",
-        'b_red' => "\[\033[1;31m\]",
-        'b_green' => "\[\033[1;32m\]",
-        'b_yellow' => "\[\033[1;33\]",
-        'b_blue' => "\[\033[1;34\]",
-        'b_purple' => "\[\033[1;35\]",
-        'b_cyan' => "\[\033[1;36\]",
-        'b_white' => "\[\033[1;37\]",
+    private static array $b_colors = array(
+        'black' => "\033[1;30m",
+        'red' => "\033[1;31m",
+        'green' => "\033[1;32m",
+        'yellow' => "\033[1;33m",
+        'blue' => "\033[1;34m",
+        'purple' => "\033[1;35m",
+        'cyan' => "\033[1;36m",
+        'white' => "\033[1;37m",
     );
+
+    /**
+     * Reset Cli Color
+     */
+    public const RESET = "\033[0m";
+
+    /**
+     * Foreground Color
+     *
+     * @param string $color
+     * @return mixed|string
+     */
+    public static function fg(string $color): string
+    {
+        return self::$fg_colors[$color];
+    }
+
+    /**
+     * Background Color
+     *
+     * @param string $color
+     * @return mixed|string
+     */
+    public static function bg(string $color): string
+    {
+        return self::$bg_colors[$color];
+    }
+
+    /**
+     * Bold Foreground Color
+     *
+     * @param string $color
+     * @return mixed|string
+     */
+    public static function bold(string $color): string
+    {
+        return self::$b_colors[$color];
+    }
+
+    /**
+     * Underline Color
+     *
+     * @param string $color
+     * @return mixed|string
+     */
+    public static function ul(string $color): string
+    {
+        return self::$ul_colors[$color];
+    }
+
+    /**
+     * @param string $str
+     * @param string $color
+     * @param string $type (fg, bg, bold, ul)
+     * @return string
+     * @throws UnknownStyleTypeException
+     */
+    public static function paint(string $str, string $color, string $type = 'fg'): string
+    {
+        if (!in_array($type, array('fg', 'bg', 'ul', 'bold'))){
+            throw new UnknownStyleTypeException("unknown style type $type");
+        }
+        return self::$type($color) . $str . self::RESET;
+    }
 }
