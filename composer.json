@@ -1,0 +1,26 @@
+{
+    "name": "cfyer/colorize-cli",
+    "description": "Simple PHP library for change command line color",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Cfyer\\ColorizeCli\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Cfyer\\ColorizeCli\\Tests\\": "tests/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Hamidreza Safayee",
+            "email": "hamidreza.safayee@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require-dev": {
+        "phpunit/phpunit": "^9.5"
+    }
+}
