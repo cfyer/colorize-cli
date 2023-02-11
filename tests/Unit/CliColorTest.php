@@ -36,6 +36,9 @@ class CliColorTest extends TestCase
         $this->assertEquals("\033[1;31m", $output);
     }
 
+    /**
+     * @throws UnknownStyleTypeException
+     */
     public function testPaintMethod()
     {
         $output = CliColor::paint('text', 'yellow', 'bg');
@@ -48,5 +51,12 @@ class CliColorTest extends TestCase
         $this->expectException(UnknownStyleTypeException::class);
 
         CliColor::paint('text', 'yellow', 'no');
+    }
+
+    public function testPadMethod()
+    {
+        $output = CliColor::pad("input", 4, '#', 'left');
+
+        $this->assertEquals("####input", $output);
     }
 }

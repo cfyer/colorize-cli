@@ -58,7 +58,7 @@ class CliColor implements CliColorContract
      * Foreground Color
      *
      * @param string $color
-     * @return mixed|string
+     * @return string
      */
     public static function fg(string $color): string
     {
@@ -69,7 +69,7 @@ class CliColor implements CliColorContract
      * Background Color
      *
      * @param string $color
-     * @return mixed|string
+     * @return string
      */
     public static function bg(string $color): string
     {
@@ -80,7 +80,7 @@ class CliColor implements CliColorContract
      * Bold Foreground Color
      *
      * @param string $color
-     * @return mixed|string
+     * @return string
      */
     public static function bold(string $color): string
     {
@@ -91,7 +91,7 @@ class CliColor implements CliColorContract
      * Underline Color
      *
      * @param string $color
-     * @return mixed|string
+     * @return string
      */
     public static function ul(string $color): string
     {
@@ -111,5 +111,22 @@ class CliColor implements CliColorContract
             throw new UnknownStyleTypeException("unknown style type $type");
         }
         return self::$type($color) . $str . self::RESET;
+    }
+
+    /**
+     * @param string $input
+     * @param int $length
+     * @param string $char
+     * @param string $align
+     * @return string
+     */
+    public static function pad(string $input, int $length, string $char = ' ', string $align = 'both'): string
+    {
+        $align = match ($align){
+            'left' => STR_PAD_LEFT,
+            'right' => STR_PAD_RIGHT,
+            'both' => STR_PAD_BOTH,
+        };
+        return str_pad($input, strlen($input)+$length, $char, $align);
     }
 }
